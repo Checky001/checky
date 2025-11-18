@@ -19,17 +19,17 @@ export default function StoreRegistrationScreen() {
   const [storeName, setStoreName] = useState("");
   const [category, setCategory] = useState("");
   const [address, setAddress] = useState("");
-  const [adminName, setAdminName] = useState("");
   const [adminEmail, setAdminEmail] = useState("");
   const [adminPhone, setAdminPhone] = useState("");
+  const [adminPassword, setAdminPassword] = useState("");
 
   const handleNext = () => {
     if (step === 1 && (!storeName.trim() || !category.trim() || !address.trim())) {
       Alert.alert("Missing Info", "Please fill in all store details.");
       return;
     }
-    if (step === 2 && (!adminName.trim() || !adminEmail.trim())) {
-      Alert.alert("Missing Info", "Please fill in at least name and email.");
+    if (step === 2 && (!adminEmail.trim() || !adminPassword.trim())) {
+      Alert.alert("Missing Info", "Please fill in email and password.");
       return;
     }
     setStep((prev) => (prev === 1 ? 2 : 3));
@@ -97,13 +97,7 @@ export default function StoreRegistrationScreen() {
 
           {step === 2 && (
             <View>
-              <Text style={styles.sectionTitle}>Owner / Admin</Text>
-              <Input
-                label="Full Name"
-                placeholder="Store owner name"
-                value={adminName}
-                onChangeText={setAdminName}
-              />
+              <Text style={styles.sectionTitle}>Owner / Admin Account</Text>
               <Input
                 label="Email"
                 placeholder="owner@store.com"
@@ -111,6 +105,13 @@ export default function StoreRegistrationScreen() {
                 onChangeText={setAdminEmail}
                 keyboardType="email-address"
                 autoCapitalize="none"
+              />
+              <Input
+                label="Password"
+                placeholder="Create a secure password"
+                value={adminPassword}
+                onChangeText={setAdminPassword}
+                secureTextEntry
               />
               <Input
                 label="Phone Number"
@@ -133,15 +134,15 @@ export default function StoreRegistrationScreen() {
               <Text style={[styles.reviewLabel, { marginTop: Spacing.md }]}>
                 Admin
               </Text>
-              <Text style={styles.reviewValue}>{adminName}</Text>
               <Text style={styles.reviewValue}>{adminEmail}</Text>
               {adminPhone ? (
                 <Text style={styles.reviewValue}>{adminPhone}</Text>
               ) : null}
 
               <Text style={[styles.helperText, { marginTop: Spacing.lg }]}>
-                Once approved, you'll receive a unique entrance QR code, product
-                dashboard, and DVA wallet integration for settlements.
+                Once approved, a Checky super admin will generate your Store ID,
+                entrance QR code, and connect your store to the DVA wallet for
+                settlements. You’ll receive these details by email.
               </Text>
             </View>
           )}

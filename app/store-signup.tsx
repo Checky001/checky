@@ -12,13 +12,12 @@ import { Keyboard, TouchableWithoutFeedback } from "react-native";
 
 export default function StoreSignupScreen() {
   const router = useRouter();
-  const [storeCode, setStoreCode] = useState("");
   const [adminEmail, setAdminEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSignup = () => {
-    if (!storeCode.trim() || !adminEmail.trim() || !password.trim()) {
-      Alert.alert("Error", "Please fill in all fields");
+    if (!adminEmail.trim() || !password.trim()) {
+      Alert.alert("Error", "Please enter email and password");
       return;
     }
 
@@ -43,17 +42,10 @@ export default function StoreSignupScreen() {
         >
           <Text style={styles.title}>Store Signup</Text>
           <Text style={styles.subtitle}>
-            Connect an approved store to the Checky dashboard and DVA wallet.
+            Approved store owners can log in to their Checky dashboard.
           </Text>
 
           <Card style={styles.card}>
-            <Input
-              label="Store Code"
-              placeholder="e.g. STORE_001"
-              value={storeCode}
-              onChangeText={setStoreCode}
-              autoCapitalize="characters"
-            />
             <Input
               label="Admin Email"
               placeholder="owner@store.com"

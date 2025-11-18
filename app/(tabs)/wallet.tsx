@@ -18,10 +18,12 @@ import { Spacing } from "@/constants/spacing";
 import { useWallet } from "@/context/WalletContext";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import { useRouter } from "expo-router";
 import { FadeInView } from "@/components/animations/FadeInView";
 import { getStaggerDelay } from "@/constants/animations";
 
 export default function WalletScreen() {
+  const router = useRouter();
   const { balance, transactions, addFunds } = useWallet();
   const [topUpAmount, setTopUpAmount] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -82,6 +84,14 @@ export default function WalletScreen() {
             <View style={styles.balanceFooter}>
               <Text style={styles.balanceFooterText}>DVA Payment System</Text>
             </View>
+            <Button
+              title="View Receipts"
+              onPress={() => router.push("/receipts")}
+              variant="outline"
+              fullWidth
+              size="sm"
+              style={{ marginTop: Spacing.md }}
+            />
           </Card>
           </FadeInView>
 
