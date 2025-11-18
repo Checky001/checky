@@ -1,0 +1,113 @@
+import { Transaction } from "@/types";
+
+export const transactions: Transaction[] = [
+  {
+    transaction_id: "txn_001",
+    store_id: "store_001",
+    customer_id: "cust_001",
+    items: [
+      {
+        product: {
+          product_id: "prod_001",
+          store_id: "store_001",
+          name: "Hackathon Energy Drink",
+          price: 500,
+          barcode: "8901234567890",
+          product_number: "1001",
+          category: "Beverages",
+          stock: 150,
+          created_at: "2024-01-16T12:00:00Z",
+        },
+        quantity: 2,
+      },
+      {
+        product: {
+          product_id: "prod_002",
+          store_id: "store_001",
+          name: "Chocolate Bar",
+          price: 200,
+          barcode: "8901234567891",
+          product_number: "1002",
+          category: "Snacks",
+          stock: 200,
+          created_at: "2024-01-16T12:05:00Z",
+        },
+        quantity: 3,
+      },
+    ],
+    total: 1600,
+    payment_method: "card",
+    exit_qr: "EXIT_TXN_001_CHECKY",
+    status: "verified",
+    verified_at: "2024-03-18T14:35:00Z",
+    created_at: "2024-03-18T14:30:00Z",
+  },
+  {
+    transaction_id: "txn_002",
+    store_id: "store_001",
+    customer_id: "cust_002",
+    items: [
+      {
+        product: {
+          product_id: "prod_004",
+          store_id: "store_001",
+          name: "Bottled Water 1.5L",
+          price: 100,
+          barcode: "8901234567893",
+          product_number: "1004",
+          category: "Beverages",
+          stock: 500,
+          created_at: "2024-01-16T12:15:00Z",
+        },
+        quantity: 4,
+      },
+    ],
+    total: 400,
+    payment_method: "mobile_money",
+    exit_qr: "EXIT_TXN_002_CHECKY",
+    status: "completed",
+    created_at: "2024-03-18T15:00:00Z",
+  },
+  {
+    transaction_id: "txn_003",
+    store_id: "store_002",
+    customer_id: "cust_003",
+    items: [
+      {
+        product: {
+          product_id: "prod_009",
+          store_id: "store_002",
+          name: "Organic Eggs (12 pack)",
+          price: 1200,
+          barcode: "8901234567897",
+          product_number: "2002",
+          category: "Dairy",
+          stock: 60,
+          created_at: "2024-02-02T13:05:00Z",
+        },
+        quantity: 1,
+      },
+      {
+        product: {
+          product_id: "prod_010",
+          store_id: "store_002",
+          name: "Fresh Milk 1L",
+          price: 600,
+          barcode: "8901234567898",
+          product_number: "2003",
+          category: "Dairy",
+          stock: 90,
+          created_at: "2024-02-02T13:10:00Z",
+        },
+        quantity: 2,
+      },
+    ],
+    total: 2400,
+    payment_method: "card",
+    exit_qr: "EXIT_TXN_003_CHECKY",
+    status: "verified",
+    verified_at: "2024-03-18T16:25:00Z",
+    created_at: "2024-03-18T16:20:00Z",
+  },
+];
+
