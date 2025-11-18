@@ -13,6 +13,7 @@ import {
   useFonts,
 } from "@expo-google-fonts/plus-jakarta-sans";
 import { Stack } from "expo-router";
+import { Platform } from "react-native";
 
 export default function Layout() {
   const [fontsLoaded] = useFonts({
@@ -23,7 +24,10 @@ export default function Layout() {
     "PlusJakartaSans-ExtraBold": PlusJakartaSans_800ExtraBold,
   });
 
-  if (!fontsLoaded) {
+  // On native we block rendering until fonts load.
+  // On web (Vercel) we render immediately to avoid a blank screen
+  // if font files are not served correctly.
+  if (Platform.OS !== "web" && !fontsLoaded) {
     return null;
   }
 
