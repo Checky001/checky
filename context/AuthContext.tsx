@@ -43,6 +43,14 @@ const mockUsers: User[] = [
     role: "store_admin",
     created_at: new Date(Date.now() - 60 * 24 * 60 * 60 * 1000),
   },
+  {
+    id: "ADMIN_002",
+    email: "owner@ecomart.com",
+    name: "EcoMart Store Owner",
+    phone: "+234 806 789 0123",
+    role: "store_admin",
+    created_at: new Date(Date.now() - 45 * 24 * 60 * 60 * 1000),
+  },
 ];
 
 export function AuthProvider({ children }: { children: ReactNode }) {

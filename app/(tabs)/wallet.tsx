@@ -7,6 +7,8 @@ import {
   TextInput,
   Alert,
   TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Haptics from "expo-haptics";
@@ -66,20 +68,22 @@ export default function WalletScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView
-        contentContainerStyle={styles.scrollContent}
-        showsVerticalScrollIndicator={false}
-      >
-        {/* Balance Card */}
-        <FadeInView delay={0}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+        >
+          {/* Balance Card */}
+          <FadeInView delay={0}>
           <Card style={styles.balanceCard}>
             <Text style={styles.balanceLabel}>DVA Wallet Balance</Text>
             <Text style={styles.balanceAmount}>{formatCurrency(balance)}</Text>
             <View style={styles.balanceFooter}>
-              <Text style={styles.balanceFooterText}>💳 DVA Payment System</Text>
+              <Text style={styles.balanceFooterText}>DVA Payment System</Text>
             </View>
           </Card>
-        </FadeInView>
+          </FadeInView>
 
         {/* Top Up Section */}
         <FadeInView delay={100}>
@@ -94,6 +98,8 @@ export default function WalletScreen() {
                 value={topUpAmount}
                 onChangeText={setTopUpAmount}
                 keyboardType="numeric"
+                returnKeyType="done"
+                onSubmitEditing={Keyboard.dismiss}
               />
 
               <View style={styles.quickAmounts}>
@@ -207,7 +213,8 @@ export default function WalletScreen() {
             </FadeInView>
           ))}
         </View>
-      </ScrollView>
+        </ScrollView>
+      </TouchableWithoutFeedback>
     </SafeAreaView>
   );
 }

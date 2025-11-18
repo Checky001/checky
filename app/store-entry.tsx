@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TextInput, Alert, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Alert,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
@@ -31,7 +40,8 @@ export default function StoreEntryScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.content}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.content}>
         <View style={styles.header}>
           <Ionicons name="storefront" size={64} color={Colors.primary[500]} />
           <Text style={styles.title}>Enter Store</Text>
@@ -55,6 +65,8 @@ export default function StoreEntryScreen() {
             value={storeCode}
             onChangeText={setStoreCode}
             placeholderTextColor={Colors.text.tertiary}
+            returnKeyType="done"
+            onSubmitEditing={Keyboard.dismiss}
           />
           
           <Button
@@ -78,7 +90,8 @@ export default function StoreEntryScreen() {
             </TouchableOpacity>
           ))}
         </View>
-      </View>
+        </View>
+      </TouchableWithoutFeedback>
     </SafeAreaView>
   );
 }

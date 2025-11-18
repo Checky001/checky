@@ -1,5 +1,5 @@
 import { Tabs } from "expo-router";
-import { Text } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "@/constants/colors";
 import { Typography } from "@/constants/typography";
 
@@ -14,9 +14,9 @@ export default function TabLayout() {
           backgroundColor: Colors.background.primary,
           borderTopWidth: 1,
           borderTopColor: Colors.border.light,
-          height: 60,
-          paddingBottom: 8,
-          paddingTop: 8,
+          height: 72,
+          paddingBottom: 10,
+          paddingTop: 10,
         },
         tabBarLabelStyle: {
           ...Typography.styles.small,
@@ -28,28 +28,36 @@ export default function TabLayout() {
         name="home"
         options={{
           title: "Home",
-          tabBarIcon: ({ color }) => <Text style={{ fontSize: 24 }}>🏠</Text>,
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="home-outline" size={24} color={color} />
+          ),
         }}
       />
       <Tabs.Screen
         name="scan"
         options={{
           title: "Scan",
-          tabBarIcon: ({ color }) => <Text style={{ fontSize: 24 }}>📷</Text>,
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="qr-code-outline" size={24} color={color} />
+          ),
         }}
       />
       <Tabs.Screen
         name="wallet"
         options={{
           title: "Wallet",
-          tabBarIcon: ({ color }) => <Text style={{ fontSize: 24 }}>💳</Text>,
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="wallet-outline" size={24} color={color} />
+          ),
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
           title: "Profile",
-          tabBarIcon: ({ color }) => <Text style={{ fontSize: 24 }}>👤</Text>,
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="person-circle-outline" size={24} color={color} />
+          ),
         }}
       />
     </Tabs>

@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TextInput, Alert } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Alert,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
@@ -15,10 +24,15 @@ import { products } from "@/data/products";
 export default function ProductScanScreen() {
   const router = useRouter();
   const { currentStore } = useStore();
-  const { addProduct } = useBasket();
+  const { addProduct, itemCount } = useBasket();
   const [productCode, setProductCode] = useState("");
 
   const handleScan = () => {
+    if (!productCode.trim()) {
+      Alert.alert("Error", "Please enter a product code");
+      return;
+    }
+
     if (!currentStore) {
       Alert.alert("Error", "Please enter a store first");
       router.push("/store-entry");
@@ -41,13 +55,27 @@ export default function ProductScanScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.content}>
-        <View style={styles.header}>
-          <Ionicons name="barcode" size={64} color={Colors.primary[500]} />
-          <Text style={styles.title}>Scan Product</Text>
-          <Text style={styles.subtitle}>
-            {currentStore ? `Shopping at ${currentStore.name}` : "No store selected"}
-          </Text>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.content}>
+        <View style={styles.headerRow}>
+          <View style={styles.headerLeft}>
+          <Ionicons name="barcode" size={40} color={Colors.primary[500]} />
+            <View style={{ marginLeft: Spacing.sm }}>
+              <Text style={styles.title}>Scan Product</Text>
+              <Text style={styles.subtitle}>
+                {currentStore
+                  ? `Shopping at ${currentStore.name}`
+                  : "No store selected - enter a store first"}
+              </Text>
+            </View>
+          </View>
+          <TouchableOpacity
+            style={styles.cartBadge}
+            onPress={() => router.push("/basket")}
+          >
+            <Ionicons name="cart-outline" size={20} color={Colors.text.inverse} />
+            <Text style={styles.cartBadgeText}>{itemCount}</Text>
+          </TouchableOpacity>
         </View>
 
         <Card style={styles.card}>
@@ -63,10 +91,12 @@ export default function ProductScanScreen() {
 
           <TextInput
             style={styles.input}
-            placeholder="Enter product code"
+            placeholder="Enter product code (e.g. 1001, 1002)"
             value={productCode}
             onChangeText={setProductCode}
             placeholderTextColor={Colors.text.tertiary}
+            returnKeyType="done"
+            onSubmitEditing={Keyboard.dismiss}
           />
           
           <Button
@@ -74,6 +104,7 @@ export default function ProductScanScreen() {
             onPress={handleScan}
             fullWidth
             variant="secondary"
+            disabled={!productCode.trim()}
             style={{ marginBottom: Spacing.md }}
           />
 
@@ -84,7 +115,8 @@ export default function ProductScanScreen() {
             variant="outline"
           />
         </Card>
-      </View>
+        </View>
+      </TouchableWithoutFeedback>
     </SafeAreaView>
   );
 }
@@ -98,9 +130,16 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: Spacing.xl,
   },
-  header: {
+  headerRow: {
+    flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
     marginBottom: Spacing.xl,
+  },
+  headerLeft: {
+    flexDirection: "row",
+    alignItems: "center",
+    flex: 1,
   },
   title: {
     ...Typography.styles.h3,
@@ -130,5 +169,19 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.background.primary,
     color: Colors.text.primary,
     marginBottom: Spacing.md,
+  },
+  cartBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.xs,
+    borderRadius: Spacing.borderRadius.full,
+    backgroundColor: Colors.primary[500],
+  },
+  cartBadgeText: {
+    ...Typography.styles.small,
+    color: Colors.text.inverse,
+    marginLeft: Spacing.xs,
   },
 });

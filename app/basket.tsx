@@ -54,7 +54,7 @@ export default function BasketScreen() {
             <View style={styles.itemRow}>
               <View style={styles.itemInfo}>
                 <Text style={styles.itemName}>{item.name}</Text>
-                <Text style={styles.itemPrice}>${item.price.toFixed(2)}</Text>
+                <Text style={styles.itemPrice}>₦{item.price.toLocaleString()}</Text>
               </View>
               <View style={styles.quantityControls}>
                 <TouchableOpacity
@@ -85,7 +85,7 @@ export default function BasketScreen() {
       <View style={styles.footer}>
         <View style={styles.totalRow}>
           <Text style={styles.totalLabel}>Total:</Text>
-          <Text style={styles.totalAmount}>${total.toFixed(2)}</Text>
+          <Text style={styles.totalAmount}>₦{total.toLocaleString()}</Text>
         </View>
         <Button
           title="Proceed to Checkout"

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, ScrollView, Alert } from "react-native";
+import { View, Text, StyleSheet, ScrollView, Alert, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { Colors } from "@/constants/colors";
@@ -35,56 +35,61 @@ export default function SignUpScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.content}>
-        <Text style={styles.title}>Create Account</Text>
-        <Text style={styles.subtitle}>Join Checky today</Text>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <ScrollView
+          contentContainerStyle={styles.content}
+          keyboardShouldPersistTaps="handled"
+        >
+          <Text style={styles.title}>Create Account</Text>
+          <Text style={styles.subtitle}>Join Checky today</Text>
 
-        <Card style={styles.card}>
-          <Input
-            label="Full Name"
-            placeholder="John Doe"
-            value={name}
-            onChangeText={setName}
-          />
-          <Input
-            label="Email"
-            placeholder="your@email.com"
-            value={email}
-            onChangeText={setEmail}
-            keyboardType="email-address"
-            autoCapitalize="none"
-          />
-          <Input
-            label="Phone (Optional)"
-            placeholder="+1234567890"
-            value={phone}
-            onChangeText={setPhone}
-            keyboardType="phone-pad"
-          />
-          <Input
-            label="Password"
-            placeholder="Create a password"
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry
-          />
+          <Card style={styles.card}>
+            <Input
+              label="Full Name"
+              placeholder="John Doe"
+              value={name}
+              onChangeText={setName}
+            />
+            <Input
+              label="Email"
+              placeholder="your@email.com"
+              value={email}
+              onChangeText={setEmail}
+              keyboardType="email-address"
+              autoCapitalize="none"
+            />
+            <Input
+              label="Phone (Optional)"
+              placeholder="+1234567890"
+              value={phone}
+              onChangeText={setPhone}
+              keyboardType="phone-pad"
+            />
+            <Input
+              label="Password"
+              placeholder="Create a password"
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry
+            />
+            <Button
+              title="Sign Up"
+              onPress={handleSignUp}
+              fullWidth
+              size="lg"
+              style={{ marginTop: Spacing.md }}
+            />
+          </Card>
+
           <Button
-            title="Sign Up"
-            onPress={handleSignUp}
+            title="Already have an account? Sign In"
+            onPress={() => router.push("/sign-in")}
+            variant="outline"
             fullWidth
-            size="lg"
             style={{ marginTop: Spacing.md }}
           />
-        </Card>
-
-        <Button
-          title="Already have an account? Sign In"
-          onPress={() => router.push("/sign-in")}
-          variant="outline"
-          fullWidth
-          style={{ marginTop: Spacing.md }}
-        />
-      </ScrollView>
+        </ScrollView>
+      </TouchableWithoutFeedback>
     </SafeAreaView>
   );
 }

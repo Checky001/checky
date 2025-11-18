@@ -10,11 +10,18 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { useBasket } from "@/context/BasketContext";
 import { useWallet } from "@/context/WalletContext";
+import { useStore } from "@/context/StoreContext";
+import { useReceipts } from "@/context/ReceiptContext";
+import { generateExitQR } from "@/utils/qrGenerator";
 
 export default function CheckoutScreen() {
   const router = useRouter();
-  const { items, total, clearCart } = useBasket();
+  const { items, total, clearCart, currentStoreId } = useBasket();
   const { balance, deductFunds } = useWallet();
+  const { currentStore } = useStore();
+  const { createReceipt } = useReceipts();
+
+  const formatCurrency = (amount: number) => `₦${amount.toLocaleString()}`;
 
   const handlePayment = async () => {
     if (balance < total) {
@@ -22,14 +29,33 @@ export default function CheckoutScreen() {
       return;
     }
 
+    // Snapshot items before any state changes
+    const snapshotItems = items.map((item) => ({ ...item }));
+    const storeName = currentStore?.name ?? "Anonymous Store";
+    const storeId = currentStore?.store_id ?? currentStoreId ?? null;
+
     const success = await deductFunds(total, "Purchase");
     if (success) {
+      const transactionId = `TXN_${Date.now().toString(36).toUpperCase()}`;
+      const exitQr = generateExitQR(transactionId);
+
+      const receipt = createReceipt({
+        storeId,
+        storeName,
+        total,
+        items: snapshotItems,
+        exitQr,
+      });
+
       Alert.alert("Payment Successful", "Your order has been processed", [
         {
-          text: "OK",
+          text: "View Receipt",
           onPress: () => {
             clearCart();
-            router.push("/exit-qr");
+            router.push({
+              pathname: "/exit-qr",
+              params: { receiptId: receipt.id },
+            } as any);
           },
         },
       ]);
@@ -48,12 +74,14 @@ export default function CheckoutScreen() {
           {items.map((item) => (
             <View key={item.product_id} style={styles.itemRow}>
               <Text style={styles.itemName}>{item.name} x{item.quantity}</Text>
-              <Text style={styles.itemPrice}>${(item.price * item.quantity).toFixed(2)}</Text>
+              <Text style={styles.itemPrice}>
+                {formatCurrency(item.price * item.quantity)}
+              </Text>
             </View>
           ))}
           <View style={[styles.itemRow, styles.totalRow]}>
             <Text style={styles.totalLabel}>Total:</Text>
-            <Text style={styles.totalAmount}>${total.toFixed(2)}</Text>
+            <Text style={styles.totalAmount}>{formatCurrency(total)}</Text>
           </View>
         </Card>
 
@@ -63,14 +91,16 @@ export default function CheckoutScreen() {
             <Ionicons name="wallet" size={24} color={Colors.primary[500]} />
             <View style={{ flex: 1 }}>
               <Text style={styles.walletLabel}>DVA Wallet</Text>
-              <Text style={styles.walletBalance}>Balance: ${balance.toFixed(2)}</Text>
+              <Text style={styles.walletBalance}>
+                Balance: {formatCurrency(balance)}
+              </Text>
             </View>
             <Ionicons name="checkmark-circle" size={24} color={Colors.success[500]} />
           </View>
         </Card>
 
         <Button
-          title={`Pay $${total.toFixed(2)}`}
+          title={`Pay ${formatCurrency(total)}`}
           onPress={handlePayment}
           fullWidth
           size="lg"
@@ -78,9 +108,18 @@ export default function CheckoutScreen() {
         />
 
         {balance < total && (
-          <Text style={styles.warningText}>
-            Insufficient funds. Please add ${(total - balance).toFixed(2)} to your wallet.
-          </Text>
+          <View style={styles.insufficientContainer}>
+            <Text style={styles.warningText}>
+              Insufficient funds. Please add {formatCurrency(total - balance)} to your wallet.
+            </Text>
+            <Button
+              title="Top Up Wallet"
+              onPress={() => router.push("/(tabs)/wallet")}
+              variant="outline"
+              fullWidth
+              style={{ marginTop: Spacing.sm }}
+            />
+          </View>
         )}
       </ScrollView>
     </SafeAreaView>
@@ -154,6 +193,9 @@ const styles = StyleSheet.create({
     ...Typography.styles.caption,
     color: Colors.error[500],
     textAlign: "center",
+    marginBottom: Spacing.sm,
+  },
+  insufficientContainer: {
     marginTop: Spacing.md,
   },
 });

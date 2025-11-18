@@ -101,6 +101,32 @@ export const products: Product[] = [
     created_at: "2024-02-02T10:15:00Z",
   },
 
+  // Additional FreshGrocer Victoria (STORE_002) products
+  {
+    product_id: "PROD_2004",
+    store_id: "STORE_002",
+    name: "Greek Yoghurt (500ml)",
+    price: 1200,
+    barcode: "8901234567104",
+    product_number: "2004",
+    category: "Dairy",
+    stock: 80,
+    description: "Thick and creamy Greek yoghurt.",
+    created_at: "2024-02-02T10:20:00Z",
+  },
+  {
+    product_id: "PROD_2005",
+    store_id: "STORE_002",
+    name: "Premium Eggs (15 pack)",
+    price: 2200,
+    barcode: "8901234567105",
+    product_number: "2005",
+    category: "Dairy",
+    stock: 50,
+    description: "Farm fresh brown eggs.",
+    created_at: "2024-02-02T10:25:00Z",
+  },
+
   // Everyday Essentials (STORE_004)
   {
     product_id: "PROD_4001",
@@ -125,6 +151,58 @@ export const products: Product[] = [
     stock: 150,
     description: "Fluoride toothpaste for daily oral hygiene.",
     created_at: "2024-02-20T09:10:00Z",
+  },
+
+  // Campus Mart UNILAG (STORE_006)
+  {
+    product_id: "PROD_6001",
+    store_id: "STORE_006",
+    name: "Instant Noodles (Pack)",
+    price: 450,
+    barcode: "8901234567601",
+    product_number: "6001",
+    category: "Food",
+    stock: 300,
+    description: "Quick-cook noodles for late-night study sessions.",
+    created_at: "2024-03-01T12:00:00Z",
+  },
+  {
+    product_id: "PROD_6002",
+    store_id: "STORE_006",
+    name: "Energy Drink (Can)",
+    price: 700,
+    barcode: "8901234567602",
+    product_number: "6002",
+    category: "Beverages",
+    stock: 180,
+    description: "Stay focused during long lectures.",
+    created_at: "2024-03-01T12:10:00Z",
+  },
+
+  // Night Bites Lekki (STORE_007)
+  {
+    product_id: "PROD_7001",
+    store_id: "STORE_007",
+    name: "Shawarma (Chicken)",
+    price: 2500,
+    barcode: "8901234567701",
+    product_number: "7001",
+    category: "Food",
+    stock: 40,
+    description: "Grilled chicken shawarma wrap.",
+    created_at: "2024-03-05T19:00:00Z",
+  },
+  {
+    product_id: "PROD_7002",
+    store_id: "STORE_007",
+    name: "Soft Drink Can (Assorted)",
+    price: 500,
+    barcode: "8901234567702",
+    product_number: "7002",
+    category: "Beverages",
+    stock: 120,
+    description: "Assorted soft drink cans.",
+    created_at: "2024-03-05T19:05:00Z",
   },
 ];
 

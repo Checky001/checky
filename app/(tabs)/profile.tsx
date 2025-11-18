@@ -1,15 +1,9 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  Alert,
-} from "react-native";
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import * as Haptics from "expo-haptics";
+import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "@/constants/colors";
 import { Typography } from "@/constants/typography";
 import { Spacing } from "@/constants/spacing";
@@ -20,7 +14,7 @@ import { FadeInView } from "@/components/animations/FadeInView";
 import { getStaggerDelay } from "@/constants/animations";
 
 interface MenuItem {
-  icon: string;
+  icon: string; // Ionicons name
   title: string;
   subtitle: string;
   onPress: () => void;
@@ -48,42 +42,42 @@ export default function ProfileScreen() {
 
   const menuItems: MenuItem[] = [
     {
-      icon: "👤",
+      icon: "person-circle-outline",
       title: "Edit Profile",
       subtitle: "Update your personal information",
       onPress: () => Alert.alert("Coming Soon", "Profile editing coming soon!"),
       color: Colors.primary[500],
     },
     {
-      icon: "🔔",
+      icon: "notifications-outline",
       title: "Notifications",
       subtitle: "Manage your notification preferences",
       onPress: () => Alert.alert("Coming Soon", "Notifications coming soon!"),
       color: Colors.secondary[500],
     },
     {
-      icon: "🏪",
+      icon: "storefront-outline",
       title: "My Stores",
       subtitle: "View and manage your registered stores",
       onPress: () => router.push("/store-signup"),
       color: Colors.accent[500],
     },
     {
-      icon: "📜",
+      icon: "receipt-outline",
       title: "Purchase History",
       subtitle: "View your shopping history",
       onPress: () => Alert.alert("Coming Soon", "History coming soon!"),
       color: Colors.warning[500],
     },
     {
-      icon: "🛡️",
+      icon: "shield-checkmark-outline",
       title: "Privacy & Security",
       subtitle: "Manage your account security",
       onPress: () => Alert.alert("Coming Soon", "Security settings coming soon!"),
       color: Colors.success[500],
     },
     {
-      icon: "❓",
+      icon: "help-circle-outline",
       title: "Help & Support",
       subtitle: "Get help or contact support",
       onPress: () => Alert.alert("Support", "Email: support@checky.app"),
@@ -110,10 +104,10 @@ export default function ProfileScreen() {
             <View style={styles.roleBadge}>
               <Text style={styles.roleText}>
                 {user?.role === "customer"
-                  ? "🛍️ Customer"
+                  ? "Customer"
                   : user?.role === "store_admin"
-                  ? "🏢 Store Admin"
-                  : "👑 Super Admin"}
+                  ? "Store Admin"
+                  : "Super Admin"}
               </Text>
             </View>
           </Card>
@@ -131,7 +125,7 @@ export default function ProfileScreen() {
                       { backgroundColor: item.color + "15" },
                     ]}
                   >
-                    <Text style={styles.menuEmoji}>{item.icon}</Text>
+                    <Ionicons name={item.icon as any} size={22} color={item.color} />
                   </View>
                   <View style={styles.menuText}>
                     <Text style={styles.menuTitle}>{item.title}</Text>
@@ -227,9 +221,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginRight: Spacing.md,
-  },
-  menuEmoji: {
-    fontSize: 24,
   },
   menuText: {
     flex: 1,
