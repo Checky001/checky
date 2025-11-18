@@ -17,6 +17,7 @@ export default function DemoMenuScreen() {
     { title: "Shopping Cart", icon: "cart", route: "/basket" },
     { title: "Mock Camera", icon: "camera", route: "/mock-camera" },
     { title: "Staff Verify", icon: "checkmark-circle", route: "/staff-verify" },
+    { title: "Staff App (RBAC Demo)", icon: "shield-checkmark", route: "/staff-login" },
   ];
 
   return (
